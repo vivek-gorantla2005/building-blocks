@@ -1,15 +1,22 @@
 "use client"
-import React from 'react'
-import { authClient } from '@/lib/auth-client'
-import { createAuthClient } from 'better-auth/react'
 
+import React from "react"
+import { authClient } from "@/lib/auth-client"
+import { Button } from "@/components/ui/button"
 
 const Page = () => {
-  const {data} = authClient.useSession()
+  const { data } = authClient.useSession()
+
   return (
-    <div>
+    <>
       {JSON.stringify(data)}
-    </div>
+
+      {data && (
+        <Button onClick={() => authClient.signOut()}>
+          Logout
+        </Button>
+      )}
+    </>
   )
 }
 

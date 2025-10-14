@@ -54,21 +54,24 @@ export default function RegisterForm() {
     },
   })
 
-  const onSubmit =async (values: RegisterFormValues) => {
-    await authClient.signUp.email({
-        name:values.name,
-        email:values.email,
-        password:values.password,
-        callbackURL:'/'
-    },{
-        onSuccess:()=>{
-            router.push('/')
-        },
-        onError:(err)=>{
-             toast.error(err.error.message)
-        }
-    })
-  }
+  const onSubmit = async (values: RegisterFormValues) => {
+  authClient.signUp.email(
+    {
+      name: values.name,
+      email: values.email,
+      password: values.password,
+      callbackURL: '/',
+    },
+    {
+      onSuccess: () => {
+        router.push('/');
+      },
+      onError: (err) => {
+        toast.error(err.error.message);
+      },
+    }
+  );
+};
 
   return (
     <div className="flex justify-center items-center min-h-screen">
