@@ -1,6 +1,8 @@
 import React from 'react'
 import RegisterForm from '@/features/auth/components/register-form'
-const Page = () => {
+import { requireUnauth } from '@/lib/auth-utils.server'
+const Page = async() => {
+  await requireUnauth();
   return (
     <div>
         <RegisterForm/>

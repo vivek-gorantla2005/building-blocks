@@ -23,6 +23,9 @@ import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { cn } from "@/lib/utils"
+import { authClient } from "@/lib/auth-client"
+import { useRouter } from "next/navigation"
+import { toast } from "sonner"
 
 const loginSchema = z.object({
   email: z.email("Please enter a valid email"),
@@ -32,6 +35,8 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>
 
 export default function LoginForm() {
+  const router = useRouter();
+
   const form = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -40,9 +45,21 @@ export default function LoginForm() {
     },
   })
 
-  const onSubmit = (values: LoginFormValues) => {
-    console.log("Login submitted:", values)
-    // TODO: Handle authentication logic here
+
+  const onSubmit = async(values: LoginFormValues) => {
+    await authClient.signIn.email({
+      email:values.email,
+      password:values.password,
+      callbackURL:"/"
+    },{
+      onSuccess:()=>{
+        router.push("/")
+      },
+      onError:(ctx)=>{
+        toast.error(ctx.error.message)
+        
+      }
+    })
   }
 
   return (

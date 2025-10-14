@@ -1,21 +1,17 @@
-"use client"
-
 import React from "react"
 import { authClient } from "@/lib/auth-client"
 import { Button } from "@/components/ui/button"
+import { caller } from "@/trpc/server"
+import { requireAuth } from "@/lib/auth-utils.server"
 
-const Page = () => {
-  const { data } = authClient.useSession()
+const Page =async () => {
+  await requireAuth();
+
+  const data = await caller.getUsers(); 
 
   return (
     <>
       {JSON.stringify(data)}
-
-      {data && (
-        <Button onClick={() => authClient.signOut()}>
-          Logout
-        </Button>
-      )}
     </>
   )
 }
