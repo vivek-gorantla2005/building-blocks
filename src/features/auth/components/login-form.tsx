@@ -112,7 +112,7 @@ export default function LoginForm() {
 
         <CardFooter className="flex justify-center text-sm text-gray-400">
           Don’t have an account?{" "}
-          <a href="/signup" className="text-blue-400 ml-1 hover:underline">
+          <a href="/register" className="text-blue-400 ml-1 hover:underline">
             Sign up
           </a>
         </CardFooter>

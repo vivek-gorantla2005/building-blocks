@@ -147,8 +147,8 @@ export default function RegisterForm() {
               />
 
               {/* Submit */}
-              <Button type="submit" className="w-full">
-                Sign Up
+              <Button type="submit" className="w-full" disabled={form.formState.isSubmitting}>
+                {form.formState.isSubmitting ? "Creating account..." : "Sign Up"}
               </Button>
             </form>
           </Form>

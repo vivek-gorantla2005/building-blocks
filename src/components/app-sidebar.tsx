@@ -23,6 +23,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useHasActiveSubscription } from "@/features/subscriptions/hooks/use-subscription";
 
 const menuItem = [
   {
@@ -36,6 +37,8 @@ const menuItem = [
 ];
 
 export const AppSidebar = () => {
+  const { hasActiveSubscription, isLoading } = useHasActiveSubscription();
+
   const pathname = usePathname();
   const router = useRouter();
 
@@ -96,31 +99,34 @@ export const AppSidebar = () => {
 
       {/* --- Sidebar Footer --- */}
       <SidebarFooter>
+
         <SidebarMenu>
           {/* Upgrade to Pro */}
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              asChild
-              tooltip="Upgrade to Pro"
-              className="text-primary font-medium hover:bg-primary/10 transition"
-            >
-              <Link
-                href="/upgrade"
-                className="flex items-center gap-2 text-primary"
+          {!hasActiveSubscription && !isLoading && (
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                tooltip="Upgrade to Pro"
+                className="text-primary font-medium hover:bg-primary/10 transition cursor-pointer"
+                onClick={() => authClient.checkout({ slug: "building-blocks-dev" })}
               >
-                <Sparkles className="h-4 w-4 text-primary" />
-                <span>Upgrade to Pro</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
+                <div
+                  className="flex items-center gap-2 text-primary"
+                >
+                  <Sparkles className="h-4 w-4 text-primary" />
+                  <span>Upgrade to Pro</span>
+                </div>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          )}
 
           {/* Billing */}
           <SidebarMenuItem>
-            <SidebarMenuButton asChild tooltip="Billing">
-              <Link href="/billing" className="flex items-center gap-2">
+            <SidebarMenuButton asChild tooltip="Billing" className="cursor-pointer" onClick={()=>authClient.customer.portal()}>
+              <div className="flex items-center gap-2">
                 <CreditCardIcon className="h-4 w-4" />
                 <span>Billing</span>
-              </Link>
+              </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
 
@@ -128,10 +134,10 @@ export const AppSidebar = () => {
           <SidebarMenuItem>
             <SidebarMenuButton
               onClick={() => authClient.signOut({
-                fetchOptions:{
-                    onSuccess:()=>{
-                        router.push("/login")
-                    }
+                fetchOptions: {
+                  onSuccess: () => {
+                    router.push("/login")
+                  }
                 }
               })}
               tooltip="Logout"
