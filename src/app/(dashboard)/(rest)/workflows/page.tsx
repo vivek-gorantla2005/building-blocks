@@ -5,13 +5,14 @@ import { HydrateClient } from '@/trpc/server';
 import { WorkflowsList } from '@/features/workflows/components/workflows';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Suspense } from 'react';
+import { Spinner } from "@/components/ui/spinner"
 const Page = async() => {
     await requireAuth();
     prefetchWorkflows();
   return (
     <HydrateClient>
       <ErrorBoundary fallback={<p>Error!</p>}>
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<Spinner />}>
           <WorkflowsList/>
         </Suspense>
       </ErrorBoundary>
