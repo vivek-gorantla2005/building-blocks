@@ -1,5 +1,6 @@
 import { useTRPC } from "@/trpc/client";
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { useMutation, useQueryClient, useSuspenseQuery,useQuery } from "@tanstack/react-query";
+import { useTransition } from "react";
 import { toast } from "sonner";
 
 // hook to fetch all workflows using suspense
@@ -26,5 +27,10 @@ export const useCreateWorkflow = () => {
             }
         })
     )
-
 }
+
+export const useSuspenseWorkflow =(id:string)=>{
+    const trpc =  useTRPC();
+    return useSuspenseQuery(trpc.workflows.getOne.queryOptions({id}))
+}
+
