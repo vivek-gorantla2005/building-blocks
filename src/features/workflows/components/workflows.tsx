@@ -11,16 +11,26 @@ export const WorkflowsList = () => {
   const router = useRouter();
   const workflows = useSuspenseWorkflows();
   const create_Workflow = useCreateWorkflow();
-  const {handleError,model} = useUpgradeModal();
+  const { handleError, model } = useUpgradeModal();
   const handleCreate = () => {
     create_Workflow.mutate(undefined, {
       onError: (error: any) => {
         handleError(error)
       },
-      onSuccess:(data:any)=>{
+      onSuccess: (data: any) => {
         router.push(`/workflows/${data.id}`)
       }
     });
+  };
+
+  const timeAgo = (date: string | Date) => {
+    const diff = (Date.now() - new Date(date).getTime()) / 1000; // seconds
+    if (diff < 60) return `${Math.floor(diff)}s ago`;
+    if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+    if (diff < 2592000) return `${Math.floor(diff / 86400)}d ago`;
+    if (diff < 31536000) return `${Math.floor(diff / 2592000)}mo ago`;
+    return `${Math.floor(diff / 31536000)}y ago`;
   };
 
   return (
@@ -51,12 +61,15 @@ export const WorkflowsList = () => {
           workflows.data.map((wf: any) => (
             <div
               key={wf.id}
-              className="border rounded-xl p-4 hover:shadow-md transition-shadow bg-card"
+            className="border rounded-xl p-4 hover:shadow-md transition-shadow bg-card cursor-pointer"
+              onClick={()=>router.push(`/workflows/${wf.id}`)}
             >
-              <h3 className="font-medium text-lg">{wf.name}</h3>
-              <p className="text-sm text-muted-foreground mt-1">
-                {wf.description || "No description available"}
-              </p>
+              <h3 className="font-medium text-lg mb-2">{wf.name}</h3>
+
+              <div className="flex flex-col text-sm text-muted-foreground space-y-1">
+                <p>Updated {timeAgo(wf.updatedAt)}</p>
+                <p>Created {timeAgo(wf.createdAt)}</p>
+              </div>
             </div>
           ))
         ) : (
@@ -66,6 +79,7 @@ export const WorkflowsList = () => {
           </div>
         )}
       </div>
+
     </div>
   );
 };
