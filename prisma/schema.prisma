@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -10,13 +9,13 @@ datasource db {
 }
 
 model User {
-  id            String    @id
+  id            String     @id
   name          String
   email         String
-  emailVerified Boolean   @default(false)
+  emailVerified Boolean    @default(false)
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @default(now()) @updatedAt
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @default(now()) @updatedAt
   sessions      Session[]
   accounts      Account[]
   workflows     Workflow[]
@@ -70,12 +69,53 @@ model Verification {
   @@map("verification")
 }
 
+model Workflow {
+  id         String       @id @default(uuid())
+  name       String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  userId     String
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  nodes      Node[]
+  connections Connection[]
+}
 
-model Workflow{
-  id String @id @default(uuid())
-  name String
+enum NodeType {
+  INITIAL
+}
+
+model Node {
+  id         String   @id @default(uuid())
+  workflowId String
+  workflow   Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+
+  name      String
+  type      NodeType
+  position  Json  
+  data      Json     @default("{}")
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  userId String
-  user User @relation(fields: [userId],references: [id], onDelete:Cascade)
+  updatedAt DateTime @default(now()) @updatedAt
+
+  outputConnections Connection[] @relation("FromNode")
+  inputConnections Connection[] @relation("ToNode")
+}
+
+model Connection {
+  id         String   @id @default(uuid())
+  workflowId String
+  workflow   Workflow @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  fromNodeId String
+  fromNode   Node   @relation("FromNode", fields: [fromNodeId], references: [id])
+
+  toNodeId String
+  toNode   Node   @relation("ToNode", fields: [toNodeId], references: [id])
+
+  fromOutput String @default("main")
+  toInput    String @default("main")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@unique([fromNodeId,toNodeId,fromOutput,toInput])
 }
