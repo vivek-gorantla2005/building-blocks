@@ -10570,12 +10570,12 @@ export namespace Prisma {
   }
 
   export type ConnectionCreateInput = {
-    workflowId: string
+    id?: string
     fromOutput?: string
     toInput?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    workflow?: WorkflowCreateNestedOneWithoutConnectionsInput
+    workflow: WorkflowCreateNestedOneWithoutConnectionsInput
     fromNode: NodeCreateNestedOneWithoutOutputConnectionsInput
     toNode: NodeCreateNestedOneWithoutInputConnectionsInput
   }
@@ -10592,7 +10592,7 @@ export namespace Prisma {
   }
 
   export type ConnectionUpdateInput = {
-    workflowId?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     fromOutput?: StringFieldUpdateOperationsInput | string
     toInput?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -10625,7 +10625,7 @@ export namespace Prisma {
   }
 
   export type ConnectionUpdateManyMutationInput = {
-    workflowId?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     fromOutput?: StringFieldUpdateOperationsInput | string
     toInput?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12124,7 +12124,7 @@ export namespace Prisma {
   }
 
   export type ConnectionCreateWithoutWorkflowInput = {
-    workflowId: string
+    id?: string
     fromOutput?: string
     toInput?: string
     createdAt?: Date | string
@@ -12134,7 +12134,7 @@ export namespace Prisma {
   }
 
   export type ConnectionUncheckedCreateWithoutWorkflowInput = {
-    workflowId: string
+    id?: string
     fromNodeId: string
     toNodeId: string
     fromOutput?: string
@@ -12272,12 +12272,12 @@ export namespace Prisma {
   }
 
   export type ConnectionCreateWithoutFromNodeInput = {
-    workflowId: string
+    id?: string
     fromOutput?: string
     toInput?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    workflow?: WorkflowCreateNestedOneWithoutConnectionsInput
+    workflow: WorkflowCreateNestedOneWithoutConnectionsInput
     toNode: NodeCreateNestedOneWithoutInputConnectionsInput
   }
 
@@ -12302,12 +12302,12 @@ export namespace Prisma {
   }
 
   export type ConnectionCreateWithoutToNodeInput = {
-    workflowId: string
+    id?: string
     fromOutput?: string
     toInput?: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    workflow?: WorkflowCreateNestedOneWithoutConnectionsInput
+    workflow: WorkflowCreateNestedOneWithoutConnectionsInput
     fromNode: NodeCreateNestedOneWithoutOutputConnectionsInput
   }
 
@@ -12715,7 +12715,7 @@ export namespace Prisma {
   }
 
   export type ConnectionCreateManyWorkflowInput = {
-    workflowId: string
+    id?: string
     fromNodeId: string
     toNodeId: string
     fromOutput?: string
@@ -12759,7 +12759,7 @@ export namespace Prisma {
   }
 
   export type ConnectionUpdateWithoutWorkflowInput = {
-    workflowId?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     fromOutput?: StringFieldUpdateOperationsInput | string
     toInput?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12769,7 +12769,7 @@ export namespace Prisma {
   }
 
   export type ConnectionUncheckedUpdateWithoutWorkflowInput = {
-    workflowId?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     fromNodeId?: StringFieldUpdateOperationsInput | string
     toNodeId?: StringFieldUpdateOperationsInput | string
     fromOutput?: StringFieldUpdateOperationsInput | string
@@ -12779,7 +12779,7 @@ export namespace Prisma {
   }
 
   export type ConnectionUncheckedUpdateManyWithoutWorkflowInput = {
-    workflowId?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     fromNodeId?: StringFieldUpdateOperationsInput | string
     toNodeId?: StringFieldUpdateOperationsInput | string
     fromOutput?: StringFieldUpdateOperationsInput | string
@@ -12809,7 +12809,7 @@ export namespace Prisma {
   }
 
   export type ConnectionUpdateWithoutFromNodeInput = {
-    workflowId?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     fromOutput?: StringFieldUpdateOperationsInput | string
     toInput?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12839,7 +12839,7 @@ export namespace Prisma {
   }
 
   export type ConnectionUpdateWithoutToNodeInput = {
-    workflowId?: StringFieldUpdateOperationsInput | string
+    id?: StringFieldUpdateOperationsInput | string
     fromOutput?: StringFieldUpdateOperationsInput | string
     toInput?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

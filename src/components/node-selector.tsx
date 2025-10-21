@@ -86,7 +86,6 @@ export function NodeSelector({
         type: selection.type,
       };
 
-      // ✅ Remove the INITIAL node before adding the new one
       setNodes((prevNodes) => {
         const filtered = prevNodes.filter(
           (node) => node.type !== NodeType.INITIAL

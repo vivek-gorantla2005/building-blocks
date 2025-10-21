@@ -105,13 +105,13 @@ model Node {
 model Connection {
   id         String   @id @default(uuid())
   workflowId String
-  workflow   Workflow @relation(fields: [id], references: [id], onDelete: Cascade)
+  workflow   Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
 
   fromNodeId String
-  fromNode   Node   @relation("FromNode", fields: [fromNodeId], references: [id])
+  fromNode   Node   @relation("FromNode", fields: [fromNodeId], references: [id],onDelete: Cascade)
 
   toNodeId String
-  toNode   Node   @relation("ToNode", fields: [toNodeId], references: [id])
+  toNode   Node   @relation("ToNode", fields: [toNodeId], references: [id],onDelete: Cascade)
 
   fromOutput String @default("main")
   toInput    String @default("main")

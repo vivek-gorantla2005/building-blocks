@@ -1,14 +1,19 @@
 import { cn } from "@/lib/utils";
-import { forwardRef, type HTMLAttributes } from "react";
+import { forwardRef, HtmlHTMLAttributes, type HTMLAttributes } from "react";
+import { NodeStatus } from "./node-status-indicator";
+import { CheckCircleIcon, Loader2Icon, XCircleIcon } from "lucide-react";
+interface BaseNodeProps extends HTMLAttributes<HTMLDivElement> {
+  status?: NodeStatus
+}
 
 export const BaseNode = forwardRef<
   HTMLDivElement,
-  HTMLAttributes<HTMLDivElement>
->(({ className, ...props }, ref) => (
+  BaseNodeProps
+>(({ className, status, ...props }, ref) => (
   <div
     ref={ref}
     className={cn(
-      "relative rounded-md border bg-card text-card-foreground",
+      "relative rounded-sm border-muted-foreground hover:bg-accent border bg-card text-card-foreground",
       "hover:ring-1",
       // React Flow displays node elements inside of a `NodeWrapper` component,
       // which compiles down to a div with the class `react-flow__node`.
@@ -21,7 +26,17 @@ export const BaseNode = forwardRef<
     )}
     tabIndex={0}
     {...props}
-  />
+  >
+    {props.children}
+    {status && (
+      <div className="absolute top-1 right-1">
+        {status === "success" && <CheckCircleIcon className="w-2 h-2 text-green-500 absolute top-0.5 right-0.5"   />}
+        {status === "error" && <XCircleIcon className="w-2 h-2 text-red-500 absolute top-0.5 right-0.5"/>}
+        {status === "loading" && <Loader2Icon className="w-2 h-2 text-blue-700 animate-spin absolute top-0.5 right-0.5" />}
+      </div>
+    )}
+
+  </div>
 ));
 BaseNode.displayName = "BaseNode";
 
